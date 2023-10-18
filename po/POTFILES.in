@@ -181,6 +181,7 @@ gramps/gen/filters/rules/person/_hasnickname.py
 gramps/gen/filters/rules/person/_hasnote.py
 gramps/gen/filters/rules/person/_hasnotematchingsubstringof.py
 gramps/gen/filters/rules/person/_hasnoteregexp.py
+gramps/gen/filters/rules/person/_hasothergender.py
 gramps/gen/filters/rules/person/_hasrelationship.py
 gramps/gen/filters/rules/person/_hassoundexname.py
 gramps/gen/filters/rules/person/_hassourcecount.py
@@ -374,15 +375,18 @@ gramps/gen/utils/image.py
 gramps/gen/utils/keyword.py
 gramps/gen/utils/lds.py
 gramps/gen/utils/place.py
+gramps/gen/utils/requirements.py
 gramps/gen/utils/string.py
 gramps/gen/utils/symbols.py
 gramps/gen/utils/unknown.py
+gramps/gen/utils/win32locale.py
 gramps/grampsapp.py
 gramps/gui/aboutdialog.py
 gramps/gui/autocomp.py
 gramps/gui/clipboard.py
 gramps/gui/columnorder.py
 gramps/gui/configure.py
+gramps/gui/csvdialect.py
 gramps/gui/dbloader.py
 gramps/gui/dbman.py
 gramps/gui/dialog.py
@@ -575,6 +579,8 @@ gramps/gui/widgets/reorderfam.py
 gramps/gui/widgets/styledtextbuffer.py
 gramps/gui/widgets/styledtexteditor.py
 gramps/gui/widgets/validatedmaskedentry.py
+gramps/plugins/cite/cite.gpr.py
+gramps/plugins/cite/default.py
 gramps/plugins/db/bsddb/bsddb.gpr.py
 gramps/plugins/db/dbapi/sqlite.gpr.py
 gramps/plugins/db/dbapi/sqlite.py
@@ -712,6 +718,7 @@ gramps/plugins/textreport/summary.py
 gramps/plugins/textreport/tableofcontents.py
 gramps/plugins/textreport/tagreport.py
 gramps/plugins/textreport/textplugins.gpr.py
+gramps/plugins/thumbnailer/thumb.gpr.py
 gramps/plugins/tool/changenames.glade
 gramps/plugins/tool/changenames.py
 gramps/plugins/tool/changetypes.glade
@@ -783,6 +790,7 @@ gramps/plugins/webreport/addressbook.py
 gramps/plugins/webreport/addressbooklist.py
 gramps/plugins/webreport/basepage.py
 gramps/plugins/webreport/buchheim.py
+gramps/plugins/webreport/calendar.py
 gramps/plugins/webreport/contact.py
 gramps/plugins/webreport/download.py
 gramps/plugins/webreport/event.py
@@ -808,8 +816,8 @@ gramps/plugins/webstuff/webstuff.py
 #
 #   Files to extract from and then merge into
 #
-data/gramps.xml.in
-data/gramps.appdata.xml.in
-data/gramps.desktop.in
+data/org.gramps_project.Gramps.xml.in
+data/org.gramps_project.Gramps.appdata.xml.in
+data/org.gramps_project.Gramps.desktop.in
 data/holidays.xml
 data/tips.xml

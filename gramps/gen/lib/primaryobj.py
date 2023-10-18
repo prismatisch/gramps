@@ -23,29 +23,31 @@
 Basic Primary Object class for Gramps.
 """
 
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #
 # Standard Python modules
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 from abc import abstractmethod
 
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #
 # Gramps modules
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 from .tableobj import TableObject
 from .privacybase import PrivacyBase
 from .citationbase import CitationBase
 from .mediabase import MediaBase
+from .notebase import NoteBase
 from .tagbase import TagBase
 
-#-------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
 #
 # Basic Primary Object class
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 class BasicPrimaryObject(TableObject, PrivacyBase, TagBase):
     """
     The BasicPrimaryObject is the base class for :class:`~.note.Note` objects.
@@ -200,11 +202,12 @@ class BasicPrimaryObject(TableObject, PrivacyBase, TagBase):
         """
         pass
 
-#-------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
 #
 # Primary Object class
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 class PrimaryObject(BasicPrimaryObject):
     """
     The PrimaryObject is the base class for all primary objects in the
@@ -254,9 +257,9 @@ class PrimaryObject(BasicPrimaryObject):
                   of this object type.
         :rtype: bool
         """
-        if classname == 'Citation' and isinstance(self, CitationBase):
+        if classname == "Citation" and isinstance(self, CitationBase):
             return self.has_citation_reference(handle)
-        elif classname == 'Media' and isinstance(self, MediaBase):
+        elif classname == "Media" and isinstance(self, MediaBase):
             return self.has_media_reference(handle)
         else:
             return self._has_handle_reference(classname, handle)
@@ -270,10 +273,12 @@ class PrimaryObject(BasicPrimaryObject):
         :param handle_list: The list of handles to be removed.
         :type handle_list: str
         """
-        if classname == 'Citation' and isinstance(self, CitationBase):
+        if classname == "Citation" and isinstance(self, CitationBase):
             self.remove_citation_references(handle_list)
-        elif classname == 'Media' and isinstance(self, MediaBase):
+        elif classname == "Media" and isinstance(self, MediaBase):
             self.remove_media_references(handle_list)
+        elif classname == "Note" and isinstance(self, NoteBase):
+            self.remove_note_references(handle_list)
         else:
             self._remove_handle_references(classname, handle_list)
 
@@ -288,9 +293,9 @@ class PrimaryObject(BasicPrimaryObject):
         :param new_handle: The handle to replace the old one with.
         :type new_handle: str
         """
-        if classname == 'Citation' and isinstance(self, CitationBase):
+        if classname == "Citation" and isinstance(self, CitationBase):
             self.replace_citation_references(old_handle, new_handle)
-        elif classname == 'Media' and isinstance(self, MediaBase):
+        elif classname == "Media" and isinstance(self, MediaBase):
             self.replace_media_references(old_handle, new_handle)
         else:
             self._replace_handle_reference(classname, old_handle, new_handle)

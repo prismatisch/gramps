@@ -1,4 +1,3 @@
-
 #
 # Gramps - a GTK+/GNOME based genealogy program
 #
@@ -26,6 +25,7 @@ from .basicentry import *
 from .buttons import *
 from .dateentry import *
 from .expandcollapsearrow import *
+from .histogram import *
 from .labels import *
 from .linkbox import *
 from .photo import *
@@ -43,3 +43,4 @@ from .undoablestyledbuffer import *
 from .validatedcomboentry import *
 from .validatedmaskedentry import *
 from .placewithin import *
+from .persistenttreeview import *

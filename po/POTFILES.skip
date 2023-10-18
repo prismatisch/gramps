@@ -8,6 +8,7 @@ setup.py
 # gramps
 #
 gramps/__init__.py
+gramps/__main__.py
 gramps/version.py
 #
 # cli
@@ -279,6 +280,7 @@ gramps/gen/utils/lru.py
 gramps/gen/utils/maclocale.py
 gramps/gen/utils/resourcepath.py
 gramps/gen/utils/thumbnails.py
+gramps/gen/utils/unittest.py
 #
 # gen.utils.docgen
 #
@@ -341,6 +343,7 @@ gramps/gui/editors/displaytabs/placenamemodel.py
 gramps/gui/editors/displaytabs/placerefmodel.py
 gramps/gui/editors/displaytabs/reporefmodel.py
 gramps/gui/editors/displaytabs/sourcebackreflist.py
+gramps/gui/editors/displaytabs/srcattrmodel.py
 gramps/gui/editors/displaytabs/surnamemodel.py
 gramps/gui/editors/displaytabs/webmodel.py
 #
@@ -435,6 +438,7 @@ gramps/gui/widgets/dateentry.py
 gramps/gui/widgets/fanchart2way.py
 gramps/gui/widgets/fanchartdesc.py
 gramps/gui/widgets/grabbers.py
+gramps/gui/widgets/histogram.py
 gramps/gui/widgets/interactivesearchbox.py
 gramps/gui/widgets/linkbox.py
 gramps/gui/widgets/menuitem.py
@@ -452,6 +456,10 @@ gramps/gui/widgets/validatedcomboentry.py
 # plugins
 #
 gramps/plugins/__init__.py
+#
+# plugins/cite directory
+#
+gramps/plugins/cite/__init__.py
 #
 # plugins/db/bsddb directory
 #
@@ -572,6 +580,7 @@ gramps/plugins/rel/rel_ru.py
 gramps/plugins/rel/rel_sk.py
 gramps/plugins/rel/rel_sl.py
 gramps/plugins/rel/rel_sv.py
+gramps/plugins/rel/rel_tr.py
 gramps/plugins/rel/rel_uk.py
 #
 # plugins/sidebar directory
@@ -587,6 +596,12 @@ gramps/plugins/test/exports_test.py
 gramps/plugins/test/imports_test.py
 gramps/plugins/test/reports_test.py
 gramps/plugins/test/tools_test.py
+#
+# Thumbnailers
+#
+gramps/plugins/thumbnailer/__init__.py
+gramps/plugins/thumbnailer/gnomethumb.py
+gramps/plugins/thumbnailer/imagethumb.py
 #
 # Development tools
 #

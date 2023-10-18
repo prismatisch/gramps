@@ -23,11 +23,11 @@ Exports the DbTxn class for managing Gramps transactions and the undo
 database.
 """
 
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #
 # Standard python modules
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 import pickle
 import logging
 from collections import defaultdict
@@ -35,28 +35,36 @@ import time
 import inspect
 import os
 
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #
 # Gramps modules
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 from .dbconst import DBLOGNAME
 
 _LOG = logging.getLogger(DBLOGNAME)
 
 
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #
 # Gramps transaction class
 #
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 class DbTxn(defaultdict):
     """
     Define a group of database commits that define a single logical operation.
     """
 
-    __slots__ = ('msg', 'commitdb', 'db', 'batch', 'first',
-                 'last', 'timestamp', '__dict__')
+    __slots__ = (
+        "msg",
+        "commitdb",
+        "db",
+        "batch",
+        "first",
+        "last",
+        "timestamp",
+        "__dict__",
+    )
 
     def __enter__(self):
         """
@@ -77,16 +85,19 @@ class DbTxn(defaultdict):
             self.db.transaction_abort(self)
 
         elapsed_time = time.time() - self.start_time
-        if __debug__:
-            caller_frame = inspect.stack()[1]
-            _LOG.debug("    **** DbTxn %s exited. Called from file %s, "
-                       "line %s, in %s **** %.2f seconds" %
-                       ((hex(id(self)),)+
-                        (os.path.split(caller_frame[1])[1],)+
-                        tuple(caller_frame[i] for i in range(2, 4))+
-                        (elapsed_time,)
-                       )
-                      )
+        if __debug__ and _LOG.isEnabledFor(logging.DEBUG):
+            frame = inspect.currentframe()
+            c_frame = frame.f_back
+            c_code = c_frame.f_code
+            _LOG.debug(
+                "    **** DbTxn %s exited. Called from file %s, "
+                "line %s, in %s **** %.2f seconds",
+                hex(id(self)),
+                c_code.co_filename,
+                c_frame.f_lineno,
+                c_code.co_name,
+                elapsed_time,
+            )
 
         return False
 
@@ -124,25 +135,29 @@ class DbTxn(defaultdict):
         """
 
         # Conditional on __debug__ because all that frame stuff may be slow
-        if __debug__:
+        if __debug__ and _LOG.isEnabledFor(logging.DEBUG):
             caller_frame = inspect.stack()[1]
             # If the call comes from gramps.gen.db.generic.DbGenericTxn.__init__
             # then it is just a dummy redirect, so we need to go back another
             # frame to get any real information. The test does not accurately
             # check this, but seems to be good enough for the current diagnostic
             # purposes.
-            if os.path.split(caller_frame[1])[1] == "generic.py" and \
-               caller_frame[3] == "__init__":
+            if (
+                os.path.split(caller_frame[1])[1] == "generic.py"
+                and caller_frame[3] == "__init__"
+            ):
                 caller_frame = inspect.stack()[2]
-            _LOG.debug("%sDbTxn %s instantiated for '%s'. Called from file %s, "
-                       "line %s, in %s" %
-                       (("Batch " if batch else "",)+
-                        (hex(id(self)),)+
-                        (msg,)+
-                        (os.path.split(caller_frame[1])[1],)+
-                        (tuple(caller_frame[i] for i in range(2, 4)))
-                       )
-                      )
+            _LOG.debug(
+                "%sDbTxn %s instantiated for '%s'. Called from file %s, "
+                "line %s, in %s"
+                % (
+                    ("Batch " if batch else "",)
+                    + (hex(id(self)),)
+                    + (msg,)
+                    + (os.path.split(caller_frame[1])[1],)
+                    + (tuple(caller_frame[i] for i in range(2, 4)))
+                )
+            )
         defaultdict.__init__(self, list, {})
 
         self.msg = msg
@@ -178,12 +193,13 @@ class DbTxn(defaultdict):
         data is the tuple returned by the object's serialize method.
         """
         self.last = self.commitdb.append(
-            pickle.dumps((obj_type, trans_type, handle, old_data, new_data), 1))
+            pickle.dumps((obj_type, trans_type, handle, old_data, new_data), 1)
+        )
         if self.last is None:
-            self.last = len(self.commitdb) -1
+            self.last = len(self.commitdb) - 1
         if self.first is None:
             self.first = self.last
-        _LOG.debug('added to trans: %d %d %s' % (obj_type, trans_type, handle))
+        _LOG.debug("added to trans: %d %d %s" % (obj_type, trans_type, handle))
         self[(obj_type, trans_type)] += [(handle, new_data)]
         return
 
@@ -198,9 +214,9 @@ class DbTxn(defaultdict):
         if self.first is None or self.last is None:
             return []
         if not reverse:
-            return range(self.first, self.last+1)
+            return range(self.first, self.last + 1)
         else:
-            return range(self.last, self.first-1, -1)
+            return range(self.last, self.first - 1, -1)
 
     def get_record(self, recno):
         """
